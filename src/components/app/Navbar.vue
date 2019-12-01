@@ -16,7 +16,7 @@
               data-target="dropdown"
               ref="dropdown"
           >
-            USER NAME
+            {{getUserName}}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -28,7 +28,7 @@
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-              <a @click="logout" class="black-text">
+              <a @click="logOut" class="black-text">
                 <i class="material-icons">assignment_return</i>Выйти
               </a>
             </li>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'Navbar',
 
@@ -48,6 +50,15 @@ export default {
     date: new Date(),
     interval: null,
   }),
+
+  computed: {
+    getUserName() {
+      if (this.$store.getters.userInfo && this.$store.getters.userInfo.name) {
+        return this.$store.getters.userInfo.name;
+      }
+      return '';
+    },
+  },
 
   mounted() {
     this.toggleDropdown();
@@ -64,7 +75,8 @@ export default {
       this.$emit('toggleSidebar');
     },
 
-    logout() {
+    async logOut() {
+      await this.logout();
       this.$router.push('/login?message=logout');
     },
 
@@ -75,6 +87,7 @@ export default {
     },
 
     toggleDropdown() {
+      // eslint-disable-next-line no-undef
       this.dropdown = M.Dropdown.init(this.$refs.dropdown, {
         constrainWidth: true,
       });
@@ -83,14 +96,14 @@ export default {
     destroyDropdown() {
       if (this.dropdown && this.dropdown.destroy) {
         this.dropdown.destroy();
-        console.log('destroy dropdown');
       }
     },
 
     clearTimeInterval() {
       clearInterval(this.interval);
-      console.log('clear time');
     },
+
+    ...mapActions(['logout']),
   },
 };
 </script>

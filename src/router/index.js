@@ -58,6 +58,12 @@ const routes = [
     meta: { layout: 'main' },
     component: () => import('../views/Profile.vue'),
   },
+  {
+    path: '/tic-tac-toe',
+    name: 'tic-tac-toe',
+    meta: { layout: 'main' },
+    component: () => import('../views/TicTacToe'),
+  },
 ];
 
 const router = new VueRouter({

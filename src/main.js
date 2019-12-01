@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import App from './App.vue';

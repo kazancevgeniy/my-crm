@@ -120,7 +120,7 @@ export default {
         await this.login(formData);
         this.$router.push({ name: 'home' });
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
 

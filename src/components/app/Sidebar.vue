@@ -39,11 +39,15 @@ export default {
       },
       {
         title: 'Новая запись',
-        url: 'new-record',
+        url: '/new-record',
       },
       {
         title: 'Категории',
-        url: 'categories',
+        url: '/categories',
+      },
+      {
+        title: 'Крестики нолики',
+        url: '/tic-tac-toe',
       },
     ],
   }),

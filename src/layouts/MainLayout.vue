@@ -36,9 +36,19 @@ export default {
     isOpen: true,
   }),
 
+  async created() {
+    await this.fetchUser();
+  },
+
   methods: {
     toggleSidebar() {
       this.isOpen = !this.isOpen;
+    },
+
+    async fetchUser() {
+      if (!Object.assign(this.$store.getters.userInfo).length) {
+        await this.$store.dispatch('fetchUser');
+      }
     },
   },
 };
