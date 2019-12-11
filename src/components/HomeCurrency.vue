@@ -15,10 +15,10 @@
           </thead>
 
           <tbody>
-          <tr>
-            <td>руб</td>
-            <td>12121</td>
-            <td>12.12.12</td>
+          <tr v-for="(objKey, value) in rates" :key="objKey">
+            <td>{{value}}</td>
+            <td>{{objKey}}</td>
+            <td>{{ date }}</td>
           </tr>
           </tbody>
         </table>
@@ -30,6 +30,7 @@
 <script>
 export default {
   name: 'HomeCurrency',
+  props: ['rates', 'date'],
 };
 </script>
 

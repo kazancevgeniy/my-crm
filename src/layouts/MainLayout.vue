@@ -1,21 +1,24 @@
 <template>
-  <div class="app-main-layout">
-    <Navbar
-      @toggleSidebar="toggleSidebar"
-    />
-    <Sidebar
-      :isOpen="isOpen"
-    />
-    <main class="app-content" :class="{full: !isOpen}">
-      <div class="app-page">
-        <router-view></router-view>
-      </div>
-    </main>
+  <div>
+    <Loader v-if="loading"></Loader>
+    <div v-else class="app-main-layout">
+      <Navbar
+        @toggleSidebar="toggleSidebar"
+      />
+      <Sidebar
+        :isOpen="isOpen"
+      />
+      <main class="app-content" :class="{full: !isOpen}">
+        <div class="app-page">
+          <router-view></router-view>
+        </div>
+      </main>
 
-    <div class="fixed-action-btn">
-      <router-link class="btn-floating btn-large blue" to="/new-record">
-        <i class="large material-icons">add</i>
-      </router-link>
+      <div class="fixed-action-btn">
+        <router-link class="btn-floating btn-large blue" to="/new-record">
+          <i class="large material-icons">add</i>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +37,7 @@ export default {
 
   data: () => ({
     isOpen: true,
+    loading: true,
   }),
 
   async created() {
@@ -49,6 +53,7 @@ export default {
       if (!Object.assign(this.$store.getters.userInfo).length) {
         await this.$store.dispatch('fetchUser');
       }
+      this.loading = false;
     },
   },
 };
