@@ -21,12 +21,12 @@ export default {
       return Object.keys(this.rates).reverse();
     },
     base() {
-      return this.$store.getters.userInfo.bill / this.rates.RUB;
+      return this.$store.getters.userInfo.bill / (this.rates.RUB / this.rates.EUR);
     },
   },
   methods: {
     getCurrency(currency) {
-      return Math.floor(this.base * this.rates[currency]);
+      return (this.base * this.rates[currency]);
     },
   },
 };
