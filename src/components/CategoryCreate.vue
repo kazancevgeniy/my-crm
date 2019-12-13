@@ -64,6 +64,7 @@ export default {
     async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch();
+        return;
       }
       const category = await this.$store.dispatch('createCategory', {
         title: this.title,
@@ -71,9 +72,9 @@ export default {
       });
       this.limit = 100;
       this.title = '';
-      this.$v.$reset();
       this.$message('Категория была создана');
       this.$emit('created', category);
+      this.$v.$reset();
     },
   },
 };
