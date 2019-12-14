@@ -6,18 +6,10 @@
       </div>
 
       <form @submit.prevent="submitHandler">
-        <div class="input-field" >
-          <select ref="select" v-model="current">
-            <option value="" disabled selected>Выбирете категорию</option>
-            <option
-              v-for="c of categories"
-              :key="c.id"
-              :value="c.id"
-            >{{c.title}}</option>
-          </select>
-          <label>Выберите категорию</label>
-        </div>
-
+        <SelectCategory
+        :categories="categories"
+        @changeCategory="changeCategory"
+        ></SelectCategory>
         <div class="input-field">
           <input
             id="edit-name"
@@ -57,9 +49,13 @@
 
 <script>
 import { required, minValue } from 'vuelidate/lib/validators';
+import SelectCategory from './SelectCategory.vue';
 
 export default {
   name: 'CategoryEdit',
+  components: {
+    SelectCategory,
+  },
   props: {
     categories: {
       type: Array,
@@ -76,22 +72,6 @@ export default {
     title: { required },
     limit: { minValue: minValue(100) },
   },
-  watch: {
-    current(catId) {
-      const { title, limit } = this.categories.find(c => c.id === catId);
-      this.title = title;
-      this.limit = limit;
-    },
-  },
-  mounted() {
-    // eslint-disable-next-line no-undef
-    this.select = M.FormSelect.init(this.$refs.select);
-  },
-  destroyed() {
-    if (this.select && this.select.destroy) {
-      this.select.destroy();
-    }
-  },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
@@ -102,6 +82,13 @@ export default {
       await this.$store.dispatch('updateCategory', categoryData);
       this.$emit('updated');
       this.$message('Категория успешно обновлена');
+    },
+
+    changeCategory(catId) {
+      const { title, limit, id } = this.categories.find(c => c.id === catId);
+      this.current = id;
+      this.title = title;
+      this.limit = limit;
     },
   },
 };

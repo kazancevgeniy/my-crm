@@ -3,16 +3,15 @@
     <div class="page-title">
       <h3>Новая запись</h3>
     </div>
-
-    <form class="form">
-      <div class="input-field" >
-        <select>
-          <option
-          >name cat</option>
-        </select>
-        <label>Выберите категорию</label>
-      </div>
-
+    <Loader v-if="loading"></Loader>
+    <p v-else-if="!categories.length" class="center">
+      Категорий пока нет. <router-link to="/categories">Добавить новую категорию</router-link>
+    </p>
+    <form v-else class="form">
+      <SelectCategory
+        :categories="categories"
+        @changeCategory="changeCategory"
+      ></SelectCategory>
       <p>
         <label>
           <input
@@ -63,3 +62,25 @@
     </form>
   </div>
 </template>
+
+<script>
+import SelectCategory from '../components/category/SelectCategory.vue';
+
+export default {
+  name: 'Record',
+  components: { SelectCategory },
+  data: () => ({
+    loading: true,
+    categories: [],
+  }),
+  async mounted() {
+    this.categories = await this.$store.dispatch('fetchCategory');
+    this.loading = false;
+  },
+  methods: {
+    changeCategory(catId) {
+      console.log(catId);
+    },
+  },
+};
+</script>

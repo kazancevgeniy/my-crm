@@ -18,8 +18,8 @@
   </div>
 </template>
 <script>
-import CategoryCreate from '../components/CategoryCreate.vue';
-import CategoryEdit from '../components/CategoryEdit.vue';
+import CategoryCreate from '../components/category/CategoryCreate.vue';
+import CategoryEdit from '../components/category/CategoryEdit.vue';
 
 export default {
   name: 'Category',
@@ -31,7 +31,6 @@ export default {
   }),
   async mounted() {
     this.fetchCategories();
-    console.log(this.categories);
     this.loading = false;
   },
   methods: {
