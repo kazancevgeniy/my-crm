@@ -8,6 +8,7 @@
       <form @submit.prevent="submitHandler">
         <div class="input-field" >
           <select ref="select" v-model="current">
+            <option value="" disabled selected>Выбирете категорию</option>
             <option
               v-for="c of categories"
               :key="c.id"
@@ -19,12 +20,12 @@
 
         <div class="input-field">
           <input
-            id="name"
+            id="edit-name"
             type="text"
             v-model="title"
             :class="{ invalid: $v.title.$dirty && !$v.title.required }"
           >
-          <label for="name">Название</label>
+          <label :class="{active: title}" for="edit-name">Название</label>
           <span
             v-if="$v.title.$dirty && !$v.title.required"
             class="helper-text invalid"
@@ -33,12 +34,12 @@
 
         <div class="input-field">
           <input
-            id="limit"
+            id="edit-limit"
             type="number"
             v-model="limit"
             :class="{ invalid: $v.limit.$dirty && !$v.limit.minValue }"
           >
-          <label for="limit">Лимит</label>
+          <label :class="{active: limit}" for="edit-limit">Лимит</label>
           <span
             v-if="$v.limit.$dirty && !$v.limit.minValue"
             class="helper-text invalid"
@@ -68,7 +69,7 @@ export default {
   data: () => ({
     select: null,
     title: '',
-    limit: 100,
+    limit: null,
     current: null,
   }),
   validations: {
@@ -82,17 +83,9 @@ export default {
       this.limit = limit;
     },
   },
-  created() {
-    const { id, title, limit } = this.categories[0];
-    this.current = id;
-    this.title = title;
-    this.limit = limit;
-  },
   mounted() {
     // eslint-disable-next-line no-undef
     this.select = M.FormSelect.init(this.$refs.select);
-    // eslint-disable-next-line no-undef
-    M.updateTextFields();
   },
   destroyed() {
     if (this.select && this.select.destroy) {
