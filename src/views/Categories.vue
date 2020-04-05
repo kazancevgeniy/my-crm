@@ -38,7 +38,7 @@ export default {
       this.categories.push(category);
     },
     async fetchCategories() {
-      this.categories = await this.$store.dispatch('fetchCategory');
+      this.categories = await this.$store.dispatch('fetchCategories');
       // eslint-disable-next-line no-plusplus
       this.updateCount++;
     },

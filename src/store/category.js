@@ -1,12 +1,25 @@
 import firebase from 'firebase/app';
 
 export default {
+  state: {
+    categories: null,
+  },
+  getters: {
+    getCategories: state => state.categories,
+  },
+  mutations: {
+    SET_CATEGORIES(state, categories) {
+      state.categories = categories;
+    },
+  },
   actions: {
-    async fetchCategory({ commit, dispatch }) {
+    async fetchCategories({ commit, dispatch }) {
       try {
         const uid = await dispatch('getUid');
         const categories = (await firebase.database().ref(`/users/${uid}/categories`).once('value')).val() || {};
-        return Object.keys(categories).map(key => ({ ...categories[key], id: key }));
+        const result = Object.keys(categories).map(key => ({ ...categories[key], id: key }));
+        commit('SET_CATEGORIES', result);
+        return result;
       } catch (e) {
         commit('setError', e);
         throw e;

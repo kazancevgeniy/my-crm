@@ -12,11 +12,14 @@ import Loader from './components/app/Loader.vue';
 import 'materialize-css/dist/js/materialize.min';
 import dateFilter from '@/filters/date.filter';
 import currencyFilter from './filters/currency.filter';
+import tooltipDirective from '@/directives/tooltip.directive';
 
 Vue.config.productionTip = false;
 
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter);
+
+Vue.directive('tooltip', tooltipDirective);
 
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);

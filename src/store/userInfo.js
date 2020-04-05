@@ -9,6 +9,16 @@ export default {
     userInfo: s => s.userInfo,
   },
   actions: {
+    async updateInfo({ commit, dispatch, getters }, toUpdate) {
+      try {
+        const uId = await dispatch('getUid');
+        const updateData = { ...getters.userInfo, ...toUpdate };
+        await firebase.database().ref(`/users/${uId}/info`).update(updateData);
+        commit('SET_USER', updateData);
+      } catch (e) {
+        commit('setError', e);
+      }
+    },
     async fetchUser({ commit, dispatch }) {
       try {
         const uId = await dispatch('getUid');
